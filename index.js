@@ -90,6 +90,50 @@ controller.hears('hello', 'direct_message', function (bot, message) {
 });
 
 
+
+controller.hears('hello', 'direct_mention', function (bot, message) {
+    bot.reply(message, 'Hello!');
+});
+
+controller.hears('how are you', 'direct_mention', function (bot, message) {
+    bot.reply(message, 'I am doing good , thank you');
+});
+
+controller.hears('Merry',
+    'ambient', function (bot, message) {
+    bot.reply(message, 'Merry Xmas');
+});
+
+controller.hears('what time is it?','ambient', function (bot, message) {
+    var date = new Date();
+    var current_hour = date.getHours();
+    var current_minutes = date.getMinutes();
+
+    bot.reply(message, current_hour+":"+current_minutes);
+    });
+
+
+controller.hears('question me', 'direct_message', function(bot,message) {
+
+    // start a conversation to handle this response.
+    bot.startConversation(message,function(err,convo) {
+
+        convo.addQuestion('How are you?',function(response,convo) {
+
+            convo.say('Cool, you said: ' + response.text);
+            convo.next();
+
+        },{},'default');
+
+    })
+
+});
+
+
+
+
+
+
 /**
  * AN example of what could be:
  * Any un-handled direct mention gets a reaction and a pat response!
